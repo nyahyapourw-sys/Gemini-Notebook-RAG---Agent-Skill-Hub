@@ -33,16 +33,16 @@ Built to be **100% compatible across Gemini, Claude, and ChatGPT** without vendo
 
 #### Install via Gemini CLI:
 ```bash
-gemini skills install https://github.com/<your-username>/notebook-rag-knowledgebase.git
+gemini skills install https://github.com/nyahyapourw-sys/notebook-rag-knowledgebase.git
 ```
 Or for local workspace scope:
 ```bash
-gemini skills install https://github.com/<your-username>/notebook-rag-knowledgebase.git --scope workspace
+gemini skills install https://github.com/nyahyapourw-sys/notebook-rag-knowledgebase.git --scope workspace
 ```
 
 #### Manual Installation:
 ```bash
-git clone https://github.com/<your-username>/notebook-rag-knowledgebase.git ~/.gemini/skills/notebook-rag-knowledgebase
+git clone https://github.com/nyahyapourw-sys/notebook-rag-knowledgebase.git ~/.gemini/skills/notebook-rag-knowledgebase
 gemini skills list
 ```
 
