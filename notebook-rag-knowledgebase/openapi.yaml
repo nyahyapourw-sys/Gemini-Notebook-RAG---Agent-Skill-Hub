@@ -1,0 +1,96 @@
+openapi: 3.1.0
+info:
+  title: NotebookLM Knowledge Base API
+  description: API for discovering user notebooks and retrieving semantic grounded chunks for Autonomous RAG workflows.
+  version: 2.0.0
+servers:
+  - url: https://notebooklm.googleapis.com/v1beta
+    description: Google NotebookLM API Endpoint
+paths:
+  /notebooks:
+    get:
+      operationId: list_notebooks
+      summary: List all user notebooks
+      description: Returns a list of notebooks owned by or shared with the authenticated user.
+      responses:
+        '200':
+          description: Successful response containing notebooks list
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  notebooks:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        name:
+                          type: string
+                          example: "notebooks/nb-arch-982"
+                        title:
+                          type: string
+                          example: "Cloud Backend Architecture 2026"
+                        sourceCount:
+                          type: integer
+                          example: 14
+
+  /notebooks/{notebookId}:retrieveChunks:
+    post:
+      operationId: retrieve_relevant_chunks
+      summary: Retrieve grounded chunks from a specific notebook
+      description: Queries the vector index of the specified notebook with a dense keyword-rich query.
+      parameters:
+        - name: notebookId
+          in: path
+          required: true
+          schema:
+            type: string
+          description: The unique identifier of the target notebook
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - query
+              properties:
+                query:
+                  type: string
+                  description: Dense, keyword-rich decomposed search query
+                  example: "authentication flow OAuth JWT identity provider architecture"
+                sourceNames:
+                  type: array
+                  items:
+                    type: string
+                  description: Optional filter by specific source document names
+      responses:
+        '200':
+          description: Chunks retrieved successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  chunks:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        sourceTitle:
+                          type: string
+                          example: "Auth-Service-Spec-v2.pdf"
+                        text:
+                          type: string
+                        relevanceScore:
+                          type: number
+                          example: 0.94
+components:
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+security:
+  - BearerAuth: []

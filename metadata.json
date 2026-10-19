@@ -1,0 +1,6 @@
+{
+  "name": "Notebook RAG Knowledge Base - Agent Skill Hub",
+  "description": "Agent Skill suite and interactive workbench for NotebookLM autonomous multi-hop RAG knowledge base integration.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

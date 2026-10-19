@@ -1,0 +1,58 @@
+{
+  "$schema": "https://modelcontextprotocol.io/schema/mcp.json",
+  "name": "notebooklm-mcp-server",
+  "version": "2.0.0",
+  "description": "Model Context Protocol (MCP) server integration for Google NotebookLM (Gemini Notebook) RAG retrieval",
+  "server": {
+    "command": "npx",
+    "args": ["-y", "@google/notebooklm-mcp-server"],
+    "env": {
+      "NOTEBOOKLM_API_KEY": "${NOTEBOOKLM_API_KEY}"
+    }
+  },
+  "tools": [
+    {
+      "name": "list_notebooks",
+      "description": "Lists all available NotebookLM notebooks for the user, returning notebook IDs, titles, and creation timestamps."
+    },
+    {
+      "name": "retrieve_relevant_chunks",
+      "description": "Retrieves semantic, keyword-grounded text chunks from a target notebook.",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "Resource name of the notebook, e.g. 'notebooks/{notebook_id}'"
+          },
+          "query": {
+            "type": "string",
+            "description": "Dense, decomposed semantic search query string (strip conversational filler)"
+          },
+          "source_names": {
+            "type": "array",
+            "items": { "type": "string" },
+            "description": "Optional list of specific source document titles to filter within the notebook"
+          }
+        },
+        "required": ["name", "query"]
+      }
+    }
+  ],
+  "clientConfigs": {
+    "claudeDesktop": {
+      "instructions": "Add the following block to ~/Library/Application Support/Claude/claude_desktop_config.json (macOS) or %APPDATA%\\Claude\\claude_desktop_config.json (Windows)",
+      "snippet": {
+        "mcpServers": {
+          "notebooklm": {
+            "command": "npx",
+            "args": ["-y", "@google/notebooklm-mcp-server"],
+            "env": {
+              "NOTEBOOKLM_API_KEY": "YOUR_API_KEY_HERE"
+            }
+          }
+        }
+      }
+    }
+  }
+}
